@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-
+    private int id;
     double totalPrice;
     private int itemCount;
     private List<OrderObserver> observers;
@@ -11,8 +11,8 @@ public class Order {
 
     private int shippingCost;
 
-
     public Order(int id) {
+        this.id = id;
         this.totalPrice = 0.0;
         this.itemCount = 0;
         this.observers = new ArrayList<>();
@@ -27,7 +27,6 @@ public class Order {
     public void detach(OrderObserver observer) {
         observers.remove(observer);
     }
-
 
     public double getTotalPrice(){
         return totalPrice;
@@ -45,9 +44,21 @@ public class Order {
         this.discount = discount;
     }
 
-    @Override
-    public String toString() {
-        return "Total Price: $" + totalPrice + " | Item Count: " + itemCount;
+    public void addItem(double price) {
+        totalPrice += price;
+        itemCount++;
+        for (OrderObserver observer : observers) {
+            observer.update(this);
+        }
+
     }
 
+    public void FinalPrice(){
+        totalPrice=totalPrice+shippingCost-discount;
+    }
+
+    @Override
+    public String toString() {
+        return "Order #" + id + " | Total Price: $" + totalPrice + " | Item Count: " + itemCount;
+    }
 }
