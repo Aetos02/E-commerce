@@ -21,11 +21,11 @@ public class Order {
     }
 
     public void attach(OrderObserver observer) {
-
+        observers.add(observer);
     }
 
     public void detach(OrderObserver observer) {
-
+        observers.remove(observer);
     }
 
 
@@ -38,16 +38,16 @@ public class Order {
     }
 
     public void setShippingCost(int shippingCost) {
-
+        this.shippingCost = shippingCost;
     }
 
     public void setDiscount(int discount) {
-
+        this.discount = discount;
     }
 
     @Override
     public String toString() {
-       return null;
+        return "Total Price: $" + totalPrice + " | Item Count: " + itemCount;
     }
 
 }
